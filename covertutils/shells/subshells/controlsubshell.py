@@ -1,3 +1,4 @@
+from __future__ import print_function
 import json
 # from covertutils.payloads.generic.control import Commands as control_commands
 from covertutils.shells.subshells import SimpleSubShell

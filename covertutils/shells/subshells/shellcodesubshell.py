@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import input
 import cmd
 import re
 
@@ -85,7 +87,7 @@ class ShellcodeSubShell ( SimpleSubShell ) :
 
 
 	def confirm( self ) :
-		option = raw_input("Send the shellcode over? [y/N] ")
+		option = input("Send the shellcode over? [y/N] ")
 		return option.lower() == 'y'
 
 

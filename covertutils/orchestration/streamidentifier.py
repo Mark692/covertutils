@@ -1,3 +1,4 @@
+from builtins import object
 from string import ascii_letters
 
 from covertutils.crypto.keys import StandardCyclingKey
@@ -8,7 +9,7 @@ from covertutils.helpers import sxor, xor_str
 from covertutils.exceptions import *
 
 
-class StreamIdentifier :
+class StreamIdentifier(object) :
 
 	__comparer = ascii_letters
 
@@ -37,7 +38,7 @@ class StreamIdentifier :
 
 
 	def addStream( self, stream_name ) :
-		if stream_name in self.__streams.keys() :
+		if stream_name in list(self.__streams.keys()) :
 			raise StreamAlreadyExistsException( "Stream '%s' already exists" % stream_name )
 
 		inp_passphrase = self.cycling_algorithm( self.hashphrase + stream_name ).digest()
@@ -68,7 +69,7 @@ class StreamIdentifier :
 		if stream_name == None :
 			stream_name = self.__hard_stream
 
-		assert stream_name in self.__streams.keys()
+		assert stream_name in list(self.__streams.keys())
 
 		StandardCyclingKeys = self.__streams[ stream_name ]
 		out_StandardCyclingKey = self.__streams[ stream_name ][1]
@@ -84,7 +85,7 @@ class StreamIdentifier :
 	def checkIdentifier( self, bytes_ ) :
 		byte_len = len( bytes_ )
 
-		for stream_name, StandardCyclingKeys in self.__streams.items() :
+		for stream_name, StandardCyclingKeys in list(self.__streams.items()) :
 			inp_StandardCyclingKey = StandardCyclingKeys[0]
 			hardIdentify = (stream_name == self.__hard_stream)
 
@@ -105,10 +106,10 @@ class StreamIdentifier :
 
 
 	def getStreams( self, ) :
-		return self.__streams.keys()
+		return list(self.__streams.keys())
 
 
 	def reset( self ) :
-		for stream_name, StandardCyclingKeys in self.__streams.items() :
+		for stream_name, StandardCyclingKeys in list(self.__streams.items()) :
 			for key in StandardCyclingKeys :
 				key.reset()

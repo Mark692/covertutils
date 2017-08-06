@@ -1,17 +1,17 @@
+from builtins import object
 from abc import ABCMeta, abstractmethod
 # from time import sleep
 from threading import Thread
 
 from covertutils.helpers import defaultArgMerging
+from future.utils import with_metaclass
 
 
 
-class BaseHandler :
+class BaseHandler(with_metaclass(ABCMeta, object)) :
 	"""
 Subclassing this class and overriding its methods automatically creates a threaded handler.
 """
-
-	__metaclass__ = ABCMeta
 
 
 	def __init__( self, recv, send, orchestrator, **kw ) :

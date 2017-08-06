@@ -57,7 +57,7 @@ The `SimpleOrchestrator` class combines compression, chunking, encryption and st
 		"""
 This method resets all components of the `SimpleOrchestrator` instance, effectively flushing the Chunkers, restarting One-Time-Pad keys, etc.
 		"""
-		for stream in self.streams_buckets.keys() :
+		for stream in list(self.streams_buckets.keys()) :
 			self.streams_buckets[ stream ]['message'] = ''
 			chunker = self.getChunkerForStream( stream )
 			chunker.reset()

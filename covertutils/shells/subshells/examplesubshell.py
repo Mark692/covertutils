@@ -1,3 +1,4 @@
+from __future__ import print_function
 from covertutils.shells.subshells import SimpleSubShell
 
 class ExampleSubShell ( SimpleSubShell ) :

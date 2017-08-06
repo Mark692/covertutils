@@ -1,10 +1,11 @@
+from builtins import object
 from covertutils.handlers import BufferingHandler
 
 from threading import Thread
 
 from time import sleep
 
-class SimpleBridge :
+class SimpleBridge(object) :
 	"""
 The Bridge class is used to pass messages between 2 Handler objects. It can be used to bridge an Agent and a Handler using a third host.
 	"""

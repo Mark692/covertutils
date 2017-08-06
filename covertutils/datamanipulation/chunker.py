@@ -1,9 +1,12 @@
+from builtins import chr
+from builtins import range
+from builtins import object
 from covertutils.exceptions import *
 
 from os import urandom
 
 
-class Chunker :
+class Chunker(object) :
 	"""
 The Chunker class is used to initialize chunk and de-chunk messages.
 
@@ -36,7 +39,7 @@ The Chunker class is used to initialize chunk and de-chunk messages.
 		chunk_size = self.out_length
 		chunks = []
 
-		for i in xrange(0, len( payload ), chunk_size) :
+		for i in range(0, len( payload ), chunk_size) :
 
 			chunk = payload[i:i + chunk_size]
 			tag = self.__has_more_tag

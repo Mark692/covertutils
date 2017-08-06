@@ -1,3 +1,7 @@
+from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import input
 from abc import ABCMeta
 
 # from covertutils.handlers import ResponseOnlyHandler
@@ -10,7 +14,7 @@ from threading import Condition, Thread
 try:
 	from queue import Queue  # Python 3
 except ImportError:
-	from Queue import Queue  # Python 2
+	from queue import Queue  # Python 2
 
 import sys
 import cmd
@@ -29,7 +33,7 @@ def handlerCallbackHook( on_chunk_function, stream_dict ) :
 		# print( "In the Wrapper" )
 		stream, message = args
 		# print( stream, message )
-		if stream not in stream_dict.keys()	:	# No subshell defined for the stream
+		if stream not in list(stream_dict.keys())	:	# No subshell defined for the stream
 			return on_chunk_function
 
 		if message :
@@ -70,7 +74,7 @@ The base class of the package. It implements basics, like hooking the :class:`co
 
 		self.subshells_dict = {}
 		self.handler = handler
-		for stream_name, subshell_attrs in subshells.items() :
+		for stream_name, subshell_attrs in list(subshells.items()) :
 			# if
 			if type(subshell_attrs) is tuple :
 				subshell_class, subshell_kwargs = subshell_attrs
@@ -134,7 +138,7 @@ The base class of the package. It implements basics, like hooking the :class:`co
 
 
 	def availableStreams(self) :
-		return self.subshells_dict.keys()
+		return list(self.subshells_dict.keys())
 
 
 	def __print_streams( self ) :
@@ -181,14 +185,14 @@ Exit with 'exit', 'quit', 'q'
 		numb_streams[99] = 'Back'
 
 		option = None
-		while option not in numb_streams.keys() :
+		while option not in list(numb_streams.keys()) :
 			print( "" )
 			print( "Available Streams:" )
-			for n, stream in numb_streams.items():
+			for n, stream in list(numb_streams.items()):
 				print( "\t[{:2}] - {stream}".format(n, stream = stream) )
 
 			try :
-				option = int(raw_input( "Select stream: " ))
+				option = int(input( "Select stream: " ))
 			except :
 				print( "" )
 				print( self.ruler * 20 )
@@ -205,7 +209,7 @@ Exit with 'exit', 'quit', 'q'
 
 	def quitPrompt( self, *args ) :
 		# print( args )
-		exit_input = raw_input("[!]\tQuit shell? [y/N] ")
+		exit_input = input("[!]\tQuit shell? [y/N] ")
 		if exit_input.lower() == 'y' :
 			print( "Aborted by the user..." )
 			# sys.exit(0)

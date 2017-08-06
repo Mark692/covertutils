@@ -18,7 +18,7 @@ stager_stage = {}
 try:
 	stager_stage['work'] = stager_worker.__code__   # Python 3
 except AttributeError:
-	stager_stage['work'] = stager_worker.func_code  # Ptyhon 2
+	stager_stage['work'] = stager_worker.__code__  # Ptyhon 2
 	
 stager_stage['init'] = None
 

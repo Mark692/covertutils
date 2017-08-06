@@ -3,15 +3,15 @@ from abc import ABCMeta, abstractmethod
 from covertutils.handlers import BaseHandler
 
 from covertutils.helpers import defaultArgMerging
+from future.utils import with_metaclass
 
 
-class ResponseOnlyHandler( BaseHandler ) :
+class ResponseOnlyHandler( with_metaclass(ABCMeta, BaseHandler) ) :
 	"""
 This handler doesn't send messages with the `sendAdHoc` method. It implements a method `queueSend` to queue messages, and send them only if it is queried with a `request_data` message.
 
 Can be nicely paired with :class:`covertutils.handlers.InterrogatingHandler` for a Client-Server approach.
 	"""
-	__metaclass__ = ABCMeta
 
 	Defaults = {'request_data' : 'X'}
 

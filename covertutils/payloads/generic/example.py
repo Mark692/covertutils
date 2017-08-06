@@ -1,6 +1,7 @@
 """
 This code isn't really useful and it is meant to be a guide for making custom `stages` using the `covertutils` API
 """
+from __future__ import print_function
 def init(storage) :
 	'''
 :param dict storage: The storage object is the only persistent object between runs of both `init()` and `work()`. It is treated as a "Local Storage" for the `stage`.

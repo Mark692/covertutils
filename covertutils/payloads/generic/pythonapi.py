@@ -1,12 +1,15 @@
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 def work( storage, message ) :
 	import sys
-	import StringIO
+	import io
 	ret = ' '
 	try :
 		# print "Starting Execution"
 		compiled_message = compile(message, '<remote>', 'exec')
 		# print "Compiled"
-		retIO = StringIO.StringIO()
+		retIO = io.StringIO()
 		sys.stdout = retIO
 		exec (compiled_message)
 		sys.stdout = sys.__stdout__

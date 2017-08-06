@@ -5,16 +5,16 @@ from abc import ABCMeta, abstractmethod
 
 from covertutils.helpers import defaultArgMerging
 from covertutils.handlers import BaseHandler
+from future.utils import with_metaclass
 
 
 
 
-class ResettableHandler ( BaseHandler ) :
+class ResettableHandler ( with_metaclass(ABCMeta, BaseHandler) ) :
 	"""
 This handler can reset the :class:`covertutils.orchestration.SimpleOrchestrator` object (reset all crypto keys, stream identifiers, chunkers), in case the state between the agent and handler is lost.
 
 	"""
-	__metaclass__ = ABCMeta
 
 	Defaults = { 'reset_data' : 'R' }
 

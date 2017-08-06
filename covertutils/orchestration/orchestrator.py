@@ -1,3 +1,5 @@
+from builtins import str
+from builtins import object
 from abc import ABCMeta, abstractmethod
 
 from covertutils.datamanipulation import Chunker
@@ -12,17 +14,17 @@ from covertutils.helpers import xor_str
 
 from string import ascii_letters
 from copy import deepcopy
+from future.utils import with_metaclass
 
 
 
-class Orchestrator :
+class Orchestrator(with_metaclass(ABCMeta, object)) :
 	"""
 Orchestrator objects utilize the `raw data` to **(stream, message)** tuple translation and vice-versa.
 **(stream, message)** tuples are recognised by the classes in :mod:`covertutils.handlers` but data transmission is only possible with `raw data`.
 
 
 	"""
-	__metaclass__ = ABCMeta
 
 	__pass_encryptor = ascii_letters * 10
 
@@ -133,13 +135,13 @@ Orchestrator objects utilize the `raw data` to **(stream, message)** tuple trans
 
 	def getStreamDict( self ) :
 		d = deepcopy(self.streams_buckets)
-		for stream in self.streams_buckets.keys() :
+		for stream in list(self.streams_buckets.keys()) :
 			d[stream] = d[stream]['message']
 		return d
 
 
 	def getStreams( self ) :
-		return self.streams_buckets.keys()
+		return list(self.streams_buckets.keys())
 
 
 	def getDefaultStream( self ) :
@@ -156,13 +158,13 @@ This method returns the stream that is used if no stream is specified in `readyM
 This method resets all components of the `Orchestrator` instance, effectively restarting One-Time-Pad keys, etc.
 		"""
 		for stream in self.getStreams() :
-			for key in self.streams_buckets[stream]['keys'].values() :
+			for key in list(self.streams_buckets[stream]['keys'].values()) :
 				key.reset()
 		self.streamIdent.reset()
 
 
 	def getStreams( self ) :
-		return self.streams_buckets.keys()
+		return list(self.streams_buckets.keys())
 
 
 	def __dissectTag( self, chunk ) :

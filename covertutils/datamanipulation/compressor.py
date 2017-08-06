@@ -1,8 +1,10 @@
+from __future__ import print_function
+from builtins import object
 import bz2
 import zlib
 
 
-class Compressor :
+class Compressor(object) :
 	"""
 The Compressor class initializes the **bz2** and **zlib** compression routines.
 It detects the used compression on a **trial and error** base, eliminating the need of flag bytes containing such information.

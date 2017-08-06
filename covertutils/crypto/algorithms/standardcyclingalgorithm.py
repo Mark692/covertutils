@@ -1,4 +1,8 @@
+from __future__ import division
 
+from builtins import str
+from builtins import range
+from past.utils import old_div
 from covertutils.crypto.algorithms import CyclingAlgorithm
 
 from covertutils.helpers import sxor, permutate
@@ -111,7 +115,7 @@ class StandardCyclingAlgorithm ( CyclingAlgorithm ) :
 
 
 			prev_result = __result[:]
-			portion = int((len(__result) * (float(cycle)/cycles)))
+			portion = int((len(__result) * (old_div(float(cycle),cycles))))
 			__result = __result[: portion]
 
 		return __result

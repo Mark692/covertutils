@@ -1,4 +1,6 @@
 # from abc import ABCMeta, abstractmethod
+from future import standard_library
+standard_library.install_aliases()
 from covertutils.exceptions import *
 from covertutils.handlers import BaseHandler
 from covertutils.helpers import defaultArgMerging
@@ -10,7 +12,7 @@ from threading import Thread
 try:
 	from queue import Queue  # Python 3
 except ImportError:
-	from Queue import Queue  # Python 2
+	from queue import Queue  # Python 2
 
 
 class FunctionDictHandler( BaseHandler ) :
@@ -60,7 +62,7 @@ Well defined functions for that purpose can be found in :mod:`covertutils.payloa
 		self.processed_responses = Queue()
 		# try :
 			# self.function_dict = kw['function_dict']
-		for stream, stage in kw['function_dict'].items() :
+		for stream, stage in list(kw['function_dict'].items()) :
 			self.addStage( stream, stage )
 
 		# except :

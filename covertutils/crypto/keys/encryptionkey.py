@@ -1,9 +1,9 @@
+from builtins import object
 from abc import ABCMeta, abstractmethod
+from future.utils import with_metaclass
 
 
-class EncryptionKey :
-
-	__metaclass__ = ABCMeta
+class EncryptionKey(with_metaclass(ABCMeta, object)) :
 
 	@abstractmethod
 	def encrypt( self, plain ) : pass

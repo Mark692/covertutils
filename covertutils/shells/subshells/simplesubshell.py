@@ -1,3 +1,4 @@
+from __future__ import print_function
 import cmd
 
 from threading import Thread
@@ -81,7 +82,7 @@ class SimpleSubShell ( cmd.Cmd ) :
 		try :
 			self.cmdloop()
 		except KeyboardInterrupt :
-			print
+			print()
 			pass
 
 	def emptyline( self ) :

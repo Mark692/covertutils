@@ -1,9 +1,10 @@
+from builtins import object
 from covertutils.datamanipulation import StegoInjector
 
 from struct import pack, unpack
 
 
-class DataTransformer :
+class DataTransformer(object) :
 	"""
 This class provides automated data transformations.
 It uses the :class:`covertutils.datamanipulation.stegoinjector.StegoInjector` class to create alterations to existing data chunks.

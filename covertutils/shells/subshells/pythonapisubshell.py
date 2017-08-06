@@ -1,3 +1,4 @@
+from __future__ import print_function
 import cmd
 import re
 
@@ -105,7 +106,7 @@ class PythonAPISubShell ( SimpleSubShell ) :
 		print( "Buffer cleared!" )
 
 	def showStorage( self, line ) :
-		print
+		print()
 		self.onecmd("import pprint; pprint.pprint (storage)")
 
 	def loadFile( self, line ) :
@@ -144,7 +145,7 @@ class PythonAPISubShell ( SimpleSubShell ) :
 		toks = line.split(None, 1)
 		if not toks :
 			print( "Available special commands:" )
-			print( '\n'.join(['\t'+self.special_comm_char+comm for comm in self.special_commands.keys()]) )
+			print( '\n'.join(['\t'+self.special_comm_char+comm for comm in list(self.special_commands.keys())]) )
 			return
 		comm = toks[0]
 		arg_line = ''

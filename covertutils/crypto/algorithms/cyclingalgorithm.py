@@ -1,12 +1,12 @@
+from builtins import object
 from abc import ABCMeta, abstractmethod
 
 from binascii import hexlify
+from future.utils import with_metaclass
 
 
 
-class CyclingAlgorithm :
-
-	__metaclass__ = ABCMeta
+class CyclingAlgorithm(with_metaclass(ABCMeta, object)) :
 
 	def __init__( self, message ) :
 		self.message = message

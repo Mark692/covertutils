@@ -5,13 +5,13 @@ from covertutils.helpers import defaultArgMerging
 
 from threading import Condition, Thread
 from multiprocessing import Queue
+from future.utils import with_metaclass
 
 
-class BufferingHandler( BaseHandler ) :
+class BufferingHandler( with_metaclass(ABCMeta, BaseHandler) ) :
 	"""
 Subclassing this class and overriding its methods automatically creates a threaded handler.
 """
-	__metaclass__ = ABCMeta
 
 	def __init__( self,  recv, send, orchestrator, **kw ) :
 

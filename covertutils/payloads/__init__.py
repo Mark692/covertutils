@@ -44,7 +44,7 @@ def __form_stage_from_function( init, work ) :
 	try:                    # Python 3
 		code = {'init' : init.__code__, 'work' : work.__code__}
 	except AttributeError:  # Python 2
-		code = {'init' : init.func_code, 'work' : work.func_code}
+		code = {'init' : init.__code__, 'work' : work.__code__}
 	ret['object'] = dict_
 	ret['python'] = code
 	try :

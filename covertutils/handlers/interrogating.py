@@ -8,9 +8,10 @@ from covertutils.handlers import BaseHandler
 from threading import Thread
 
 from random import uniform
+from future.utils import with_metaclass
 
 
-class InterrogatingHandler( BaseHandler ) :
+class InterrogatingHandler( with_metaclass(ABCMeta, BaseHandler) ) :
 	"""
 This handler has a beaconing behavior, repeatedly querring the channel for messages. This behavior is useful on agents that need to have a client-oriented traffic.
 HTTP/S agents (meterpreter HTTP/S) use this approach, issueing HTTP (GET/POST) requests to the channel and executing messages found in HTTP responses.
@@ -18,8 +19,6 @@ This behavior can simulate Web Browsing, ICMP Ping, DNS traffic schemes.
 
 This handler can be nicely coupled with :class:`covertutils.handlers.ResponseOnlyHandler` for a Server-Client approach.
 """
-
-	__metaclass__ = ABCMeta
 
 	Defaults = { 'request_data' : 'X', 'delay_between' : (1.0, 2.0), 'fetch_stream' : 'control' }
 

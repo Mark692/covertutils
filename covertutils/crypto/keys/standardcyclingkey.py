@@ -1,3 +1,5 @@
+from builtins import zip
+from builtins import range
 import codecs
 
 from covertutils.crypto.keys import CyclingKey, EncryptionKey

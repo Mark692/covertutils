@@ -1,3 +1,5 @@
+from builtins import bytes
+from builtins import object
 from covertutils.exceptions import *
 
 from os import urandom
@@ -9,7 +11,7 @@ except NameError:
 	bytes = str  # Python 2
 
 
-class AdHocChunker :
+class AdHocChunker(object) :
 	"""
 The AdHocChunker class is a special chunker that doesn't tag each chunk that creates.
 It works by concatenating the actual byte size of the message that is to be chunked with the message itself.

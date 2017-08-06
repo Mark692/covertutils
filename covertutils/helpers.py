@@ -1,5 +1,7 @@
 # from builtins import chr
 
+from builtins import chr
+from builtins import zip
 from difflib import SequenceMatcher
 import abc
 

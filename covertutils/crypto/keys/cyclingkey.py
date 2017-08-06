@@ -1,10 +1,10 @@
+from builtins import object
 from abc import ABCMeta, abstractmethod
+from future.utils import with_metaclass
 
 
 
-class CyclingKey :
-
-	__metaclass__ = ABCMeta
+class CyclingKey(with_metaclass(ABCMeta, object)) :
 
 	def __init__( self, passphrase, **kw ) :
 		pass

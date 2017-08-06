@@ -52,6 +52,11 @@ Example Syntax:
 	00140050000000000000000050022000917c0000'''K[18:20],K[38:42],K[34:36]
 """
 
+from builtins import str
+from builtins import bytes
+from builtins import chr
+from builtins import range
+from builtins import object
 from covertutils.exceptions import *
 
 from os import urandom
@@ -72,7 +77,7 @@ except NameError:
 	bytes = str  # Python 2
 
 
-class StegoInjector :
+class StegoInjector(object) :
 
 	__comment_sign = '#'
 
@@ -110,7 +115,7 @@ class StegoInjector :
 			if tag in self.__not_permitted_chars :
 				raise StegoSchemeParseException( "Tag '%s' is a Letter used in Hex. Tags must be different from 'ABCDEF'" % tag )
 
-			if tag in tag_dict.keys() :
+			if tag in list(tag_dict.keys()) :
 				raise StegoSchemeParseException( "Tag '%s' is already defined." % tag )
 
 			inj_function = '(%s)' % inj_function
@@ -151,18 +156,18 @@ class StegoInjector :
 					formatted_group = re.findall( self.__group_regex, group_str)[0]
 					# print formatted_group
 					group_list.append( formatted_group )
-				hex_pkt = self.__applyGroups( hex_pkt, group_list, tag_dict.keys())
+				hex_pkt = self.__applyGroups( hex_pkt, group_list, list(tag_dict.keys()))
 
-			if self.__checkPermittedChars( hex_pkt, tag_dict.keys() ) :
+			if self.__checkPermittedChars( hex_pkt, list(tag_dict.keys()) ) :
 
-				cap = self.__getCapacityDict( hex_pkt , tag_dict.keys() )
+				cap = self.__getCapacityDict( hex_pkt , list(tag_dict.keys()) )
 				pkt_dict[ pkt_name ] = ( hex_pkt, cap )
 
 		return tag_dict, pkt_dict
 
 
 	def getTemplates( self ) :
-		return self.__packets.keys()
+		return list(self.__packets.keys())
 
 
 	def getCapacityDict( self, template ) :
@@ -241,7 +246,7 @@ Example ::
 	def __blankifyPacketFields( self, pkt, sample ) :
 		for i in range( len(sample) ) :
 			char = chr( sample[i] )
-			if char in self.__tags.keys() :
+			if char in list(self.__tags.keys()) :
 				pkt[i] = sample[i]
 		return pkt
 
@@ -270,7 +275,7 @@ Example ::
 	'AA0BB1'
 
 		"""
-		data_len = len( ''.join(data_dict.values()) )
+		data_len = len( ''.join(list(data_dict.values())) )
 		pkt, sample_capacity = self.__initializeInjection( data_len, template, pkt )
 
 		injection_dict = data_dict
@@ -310,7 +315,7 @@ Example ::
 
 	def __initializeInjection( self, data_len, template, pkt = None ) :
 
-		if template not in self.__packets.keys() :
+		if template not in list(self.__packets.keys()) :
 			raise TemplateNotFoundException( "Template '%s' is not available" % template)
 		sample_packet  = self.__packets[ template ][0]
 		sample_capacity = self.getCapacity( template )
@@ -348,14 +353,14 @@ Example ::
 		for hex_index, hex_char in enumerate( hex_pkt ) :
 
 			# print hex_index, hex_char
-			if hex_char in self.__tags.keys() :
+			if hex_char in list(self.__tags.keys()) :
 				tag = hex_char
 				# print "++++++++++++++++++++++++="
 				half_byte_hex = data_hex[0]		# pop(0) for strings
 				data_hex = data_hex [1:]
 				injection_dict[ tag ] += half_byte_hex
 
-		for tag in injection_dict.keys() :
+		for tag in list(injection_dict.keys()) :
 			injection_dict[tag] = bytearray(codecs.decode(injection_dict[tag], 'hex'))
 
 		# print len( data_hex )
@@ -366,7 +371,7 @@ Example ::
 	def __injectFromDict( self, pkt_hex, injection_dict, sample_cap ) :
 		# print injection_dict
 		pkt_hex = bytearray(pkt_hex)
-		for tag, data in injection_dict.items() :
+		for tag, data in list(injection_dict.items()) :
 			data = bytearray(data)
 			inj_function = self.__tags[ tag ]['inj_function']
 			while data :
@@ -398,7 +403,7 @@ Example ::
 		extract_dict = self.__initializeDataExtraction( pkt, template )
 		data = bytearray()
 		# print extract_dict
-		for tag, value in sorted( extract_dict.iteritems() ) :
+		for tag, value in sorted( extract_dict.items() ) :
 			data.extend( value )
 		return str(data)
 
@@ -411,7 +416,7 @@ Example ::
 
 		extract_dict = {}
 		pkt_hex = codecs.encode(bytes( pkt ), 'hex')
-		if template not in self.__packets.keys() :
+		if template not in list(self.__packets.keys()) :
 			raise TemplateNotFoundException( "Template '%s' is not available" % template)
 		sample_hex, sample_cap = self.__packets[ template ]
 		data = ''
@@ -421,7 +426,7 @@ Example ::
 		if len(sample_hex) != len(pkt_hex) :
 			raise StegoDataExtractionException("Given packet and Sample packet have not the same length")
 
-		for tag, functions in sorted( self.__tags.iteritems() ) :
+		for tag, functions in sorted( self.__tags.items() ) :
 			extr_function = functions['extr_function']
 			extract_data_ = ''
 			while tag in sample_hex :
@@ -467,7 +472,7 @@ This method tries to guess the used template of a data packet by computing simil
 
 		"""
 		ret = []
-		for template in self.__packets.keys() :
+		for template in list(self.__packets.keys()) :
 			cap = self.getCapacity( template )
 			payload = "0" * cap
 			pkt_test = self.inject( payload, template )
